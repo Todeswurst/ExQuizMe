@@ -60,7 +60,7 @@ export default class PlayQuiz extends React.Component {
 	
 	//Sets the ten questions got from the API request.
 	setQuestions(questions){
-		if(questions.val === "Quiz not found."){
+		if(questions.val === "Quiz not found." || questions.val === "Not enough questions submitted. Please submit more questions."){
 			this.setState({playQuizState: NOQUIZFOUND});
 		}
 		else{
@@ -279,7 +279,7 @@ export default class PlayQuiz extends React.Component {
 	renderNoQuizFound(){
 		return (
 			<div>
-				No Quiz or Question found. Please create a Quiz and insert Questions.
+				No Quiz or enough Question found. Please make sure this Quiz exists and you created ten or more Questions.
 			</div>
 		);
 	}

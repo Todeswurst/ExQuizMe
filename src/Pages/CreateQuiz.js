@@ -38,6 +38,12 @@ export default class CreateQuiz extends React.Component {
   }
 
   home() {
+	const panelBodyStyle={
+		whiteSpace: "normal",
+		wordWrap: "break-word",
+		borderBottom: "1px solid gray"
+	};
+	
     return (
 	<Grid>
         <div>
@@ -65,7 +71,7 @@ export default class CreateQuiz extends React.Component {
                 <Modal.Title>Quiz Created</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <h1>{this.state.url}</h1>
+                <h1 style={panelBodyStyle}>{this.state.url}</h1>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleClose}>Close</Button>
