@@ -15,15 +15,11 @@
     "react-scripts": "1.0.17"
   },
   "scripts": {
-    "build": "react-scripts start",
-    "start": "react-scripts build",
+    "client": "npm start --prefix client",
+    "start": "node server.js",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": {
-    "/api": {
-      "target": "https://cryptic-ravine-28694.herokuapp.com/api",
-      "ws": true
-    }
-  }
+  "proxy": "https://cryptic-ravine-28694.herokuapp.com/"
 }
