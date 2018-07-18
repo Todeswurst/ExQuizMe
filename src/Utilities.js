@@ -1,4 +1,6 @@
-const backendURL = "https://cryptic-ravine-28694.herokuapp.com";
+import config from "./config/keys";
+
+const backendURL = config.backend;
 
 
 function getQuestions(quizId){

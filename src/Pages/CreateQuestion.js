@@ -3,7 +3,7 @@ import CreateTrueFalse from "../Components/CreateQuestion/CreateTrueFalse";
 import CreateMultipleChoice from "../Components/CreateQuestion/CreateMultipleChoice";
 import CreateMultipleAnswers from "../Components/CreateQuestion/CreateMultipleAnswers";
 import { ButtonToolbar, DropdownButton, MenuItem, Button, Grid, Row, Col, Modal, Glyphicon } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Utilities from '../Utilities';
 
 const TRUEFALSE = "TrueFalse";
@@ -22,7 +22,8 @@ export default class CreateQuestion extends React.Component {
 			answerValidation: null,
 			explanationText: "",
 			explanationValidation: null,
-			show: false
+			show: false,
+			redirect: false
 		}
 		this.handleDropdown = this.handleDropdown.bind(this);
 		this.renderDropdown = this.renderDropdown.bind(this);
@@ -30,6 +31,7 @@ export default class CreateQuestion extends React.Component {
 		this.renderMultipleChoice = this.renderMultipleChoice.bind(this);
 		this.renderMultipleAnswers = this.renderMultipleAnswers.bind(this);
 		this.renderPopup = this.renderPopup.bind(this);
+		this.renderInteraction = this.renderInteraction.bind(this);
 
 		this.question = this.question.bind(this);
 		this.explanation = this.explanation.bind(this);
@@ -72,16 +74,23 @@ export default class CreateQuestion extends React.Component {
 	
 	render() {
 		const homeLink = `/${this.props.match.params.id}`;
-		this.renderDropdown();
-		switch(this.state.dropdownState){
-			case TRUEFALSE:
-				return this.renderTrueFalse(homeLink);
-			case MULTIPLECHOICE:
-				return this.renderMultipleChoice(homeLink);
-			case MULTIPLEANSWERS:
-				return this.renderMultipleAnswers(homeLink);
-			default:
-				return null;
+		if(!this.state.redirect){
+			this.renderDropdown();
+			switch(this.state.dropdownState){
+				case TRUEFALSE:
+					return this.renderTrueFalse(homeLink);
+					break;
+				case MULTIPLECHOICE:
+					return this.renderMultipleChoice(homeLink);
+					break;
+				case MULTIPLEANSWERS:
+					return this.renderMultipleAnswers(homeLink);
+					break;
+				default:
+					return null;
+			}
+		} else {
+			return <Redirect push to={homeLink} />;
 		}
 	}
 	
@@ -124,20 +133,7 @@ export default class CreateQuestion extends React.Component {
 					explanation={this.explanation} 
 					answer={this.answer} 
 				/>
-				<Row>
-					<Col mdPull={6}  md={5}>
-					</Col>
-					<Col xs={6}  md={1}>
-						<Button bsStyle="primary" type="submit" onClick={this.submit}>Submit</Button>
-					</Col>
-					<Col xs={1} sm={1}md={1}>
-						<Link to={homeLink}><Button type="submit">Cancel</Button></Link>
-					</Col>
-					<Col xs={5} sm={2} md={1}>
-					</Col>
-					<Col xs={1} sm={3} md={4}>
-					</Col>
-				</Row>	
+				{this.renderInteraction(homeLink)}
 				{this.renderPopup(homeLink)}	
 			</Grid>
 		);
@@ -158,20 +154,7 @@ export default class CreateQuestion extends React.Component {
 					explanation={this.explanation} 
 					answer={this.answer} 
 				/>
-				<Row>
-					<Col mdPull={6}  md={5}>
-					</Col>
-					<Col xs={6}  md={1}>
-						<Button bsStyle="primary" type="submit" onClick={this.submit}>Submit</Button>
-					</Col>
-					<Col xs={1} sm={1}md={1}>
-						<Link to={homeLink}><Button type="submit">Cancel</Button></Link>
-					</Col>
-					<Col xs={5} sm={2} md={1}>
-					</Col>
-					<Col xs={1} sm={3} md={4}>
-					</Col>
-				</Row>	
+				{this.renderInteraction(homeLink)}
 				{this.renderPopup(homeLink)}	
 			</Grid>
 		);
@@ -192,23 +175,29 @@ export default class CreateQuestion extends React.Component {
 					explanation={this.explanation} 
 					answer={this.answer} 
 				/>
-				<Row>
-					<Col mdPull={6}  md={5}>
-					</Col>
-					<Col xs={6}  md={1}>
-						<Button bsStyle="primary" type="submit" onClick={this.submit}>Submit</Button>
-					</Col>
-					<Col xs={1} sm={1}md={1}>
-						<Link to={homeLink}><Button type="submit">Cancel</Button></Link>
-					</Col>
-					<Col xs={5} sm={2} md={1}>
-					</Col>
-					<Col xs={1} sm={3} md={4}>
-					</Col>
-				</Row>
+				{this.renderInteraction(homeLink)}				 	 
 				{this.renderPopup(homeLink)}				 	 
 				</Grid>
 			);
+	}
+
+	renderInteraction(homeLink){
+		return (
+			<Row>
+				<Col mdPull={6}  md={5}>
+				</Col>
+				<Col xs={6}  md={1}>
+					<Button bsStyle="primary" type="submit" onClick={this.submit}>Submit</Button>
+				</Col>
+				<Col xs={1} sm={1}md={1}>
+					<Link to={homeLink}><Button type="submit">Cancel</Button></Link>
+				</Col>
+				<Col xs={5} sm={2} md={1}>
+				</Col>
+				<Col xs={1} sm={3} md={4}>
+				</Col>
+			</Row>
+		);
 	}
 
 	renderPopup(homeLink){
@@ -234,9 +223,6 @@ export default class CreateQuestion extends React.Component {
 	}
 
 	submit(){
-		this.setState({
-			show: true
-		  });
 		let error = false;
 		this.setState({ 
 			questionValidation: null,
@@ -268,7 +254,11 @@ export default class CreateQuestion extends React.Component {
 		payload.type = this.state.dropdownState;
 		payload.explanation = question.explanation;
 		payload.answers = question.answers;
-		Utilities.createQuestion(this.props.match.params.id, payload).then(res => { console.log(res) }).catch(error => { console.log(error) });
+		Utilities.createQuestion(this.props.match.params.id, payload).then(res => {  
+			this.setState({
+				show: true
+			  });
+		}).catch(error => { console.log(error) });
 	}
 
 	validator(value, field){
@@ -352,9 +342,7 @@ export default class CreateQuestion extends React.Component {
 		}
 		this.validator(content, "answer");
 	}
-	handleClose(homeLink) {
-		this.reset();
-		// this.setState({ show: false });
-		
+	handleClose() {
+		this.setState({redirect: true});		
 	}
 }

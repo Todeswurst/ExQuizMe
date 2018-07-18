@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
-import { Grid,Row,Col } from "react-bootstrap";
+import { Button, Modal, Grid,Row,Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import $ from "jquery";
 import utilities from "../Utilities";
+import config from "../config/keys";
 
-const baseURL = "https://cryptic-bastion-19060.herokuapp.com/";
+const baseURL = config.url;
 const HOME = 1;
 const CREATION = 2;
 
@@ -126,7 +127,7 @@ export default class CreateQuiz extends React.Component {
     utilities.createQuiz(input).then(val => {
       this.setState({
         show: true,
-        url: baseURL + val._id,
+        url: <Link to={"/" + val._id}>{baseURL + "/" + val._id}</Link>,
         creation: HOME
       });
     });

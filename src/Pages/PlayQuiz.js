@@ -19,7 +19,8 @@ export default class PlayQuiz extends React.Component {
 		super();
 		this.state = {
 			playQuizState: LOADING,
-			questionPointer: 0
+			questionPointer: 0,
+			answers: null
 		};
 		
 		this.quizState = {
@@ -31,7 +32,7 @@ export default class PlayQuiz extends React.Component {
 		//The current clicked answeres are be saved in here.
 		this.currentQuestionState = {
 			questionId: 0,
-			answers: 0,
+			answers: null,
 			correctness: false
 		};
 		
@@ -126,12 +127,25 @@ export default class PlayQuiz extends React.Component {
 	
 	skipQuestion(){
 		if(this.state.questionPointer < this.quizState.questions.length-1){
+			this.currentQuestionState = {
+				questionId: 0,
+				answers: null,
+				correctness: false
+			};
+			this.quizState.answerSelected = false;
 			this.setState({
 				questionPointer: this.state.questionPointer+1,
-				playQuizState: QUESTIONING
+				playQuizState: QUESTIONING,
+				answers: null
 			});
 		}
 		else if(this.state.questionPointer === this.quizState.questions.length-1){
+			this.currentQuestionState = {
+				questionId: 0,
+				answers: null,
+				correctness: false
+			};
+			this.quizState.answerSelected = false;
 			this.setState({
 				playQuizState: QUIZRESULTING
 			});
@@ -140,6 +154,7 @@ export default class PlayQuiz extends React.Component {
 	
 	//Event handler for the answer selection.
 	handleAnswerSelection(e){
+		this.setState({answers: e});
 		this.currentQuestionState.answers = e;
 		this.quizState.answerSelected = true;
 	}
@@ -148,13 +163,14 @@ export default class PlayQuiz extends React.Component {
 	playQuizAgain(){
 		this.setState({
 			playQuizState: QUESTIONING,
-			questionPointer:0 
+			questionPointer:0 ,
+			answers: null
 			});
 		this.quizState.answerSelected = false;
 		this.quizState.answeredQuestions.length = 0;
 		this.currentQuestionState = {
 			questionId: 0,
-			answers: 0,
+			answers: null,
 			correctness: false
 		};
 	}
@@ -196,6 +212,7 @@ export default class PlayQuiz extends React.Component {
 				<Row>
 					<Question 
 						questionData={this.quizState.questions[this.state.questionPointer]}
+						buttonGroupValue={this.state.answers}
 						handleAnswerSelection={this.handleAnswerSelection}
 					/>
 				</Row>

@@ -6,6 +6,7 @@ export default class Question extends React.Component {
 	
 	constructor(props){
 		super(props);
+		this.state = {value: null};
 		this.buttonStyle={
 			whiteSpace: "normal",
 			wordWrap: "break-word"
@@ -16,7 +17,6 @@ export default class Question extends React.Component {
 	}
 	
 	renderTrueFalse(){
-		
 		return (
 			<Grid>
 				<h2>True or False</h2>
@@ -28,6 +28,7 @@ export default class Question extends React.Component {
 					<ToggleButtonGroup
 					justified
 					type="radio" 
+					value={this.props.buttonGroupValue}
 					onChange={this.props.handleAnswerSelection}
 					name="options"
 					>
@@ -51,7 +52,8 @@ export default class Question extends React.Component {
 					<ToggleButtonGroup 
 					vertical
 					block
-					type="radio" 
+					type="radio"
+					value={this.props.buttonGroupValue}
 					onChange={this.props.handleAnswerSelection}
 					name="options" 
 					>
@@ -86,6 +88,7 @@ export default class Question extends React.Component {
 					vertical
 					block
 					type="checkbox"
+					value={this.props.buttonGroupValue}
 					onChange={this.props.handleAnswerSelection}
 					>
 					  <ToggleButton style={this.buttonStyle} bsSize="large" value={0}>
@@ -111,12 +114,12 @@ export default class Question extends React.Component {
 			return this.renderTrueFalse();
 		else if(this.props.questionData.type === "MultipleChoice")
 			return this.renderMultipleChoice();
-		else if(this.props.questionData.type === "MultipleAnswer")
+		else if(this.props.questionData.type === "MultipleAnswers")
 			return this.renderMultipleAnswer();
 		else{
 			return (
 				<div>
-					Failuere!!!
+					Failure!!!
 				</div>
 			);
 		}
