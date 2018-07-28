@@ -73,8 +73,11 @@ Add additional notes about how to deploy this on a live system.
 ### Sequence Diagram
 ![sequencediagram](https://user-images.githubusercontent.com/32699463/43357736-831a5898-9286-11e8-8cc6-f734ee709d84.png)
 
-### Frontend
+### Component Structure
 ![frontend_architecture](https://user-images.githubusercontent.com/32699463/43357732-5f833288-9286-11e8-9603-6225ef5ca2de.png)
+
+## Backend API
+![api](https://user-images.githubusercontent.com/32699463/43357795-3967b82a-9287-11e8-9a1f-cf7875746b63.png)
 
 ## Authors
 #### FutureBook
