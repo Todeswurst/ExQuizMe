@@ -1,4 +1,4 @@
-# ExQuizMe
+![logo](https://user-images.githubusercontent.com/32699463/43357652-581e35ca-9285-11e8-900e-745f5fe11804.png)
 
 ## Description
 A Quiz Tool By the students, Of the students and For the students. Students can create questions and quizzes to prepare for an exam. Other students can play these quizzes and create their own quizzes. People can provide correct explanations for answers.
@@ -59,12 +59,22 @@ Add additional notes about how to deploy this on a live system.
 ## Technologies Used
 - React - Frontend
 - React-Bootsrap - Frontend
+- Highcharts - Frontend
 - NodeJS with Express - Backend
+- Joi - Backend
 - MongoDB (Mongoose) - Database
 - Postman - Testing
 - Notepad++, PHP-Storm, VS Code - IDE
 
+## MVC Implementation
+![mvc_ts](https://user-images.githubusercontent.com/32699463/43357755-b6af2ce2-9286-11e8-9be1-cb1b676edc90.png)
+
 ## Architecture
+### Sequence Diagram
+![sequencediagram](https://user-images.githubusercontent.com/32699463/43357736-831a5898-9286-11e8-8cc6-f734ee709d84.png)
+
+### Frontend
+![frontend_architecture](https://user-images.githubusercontent.com/32699463/43357732-5f833288-9286-11e8-9603-6225ef5ca2de.png)
 
 ## Authors
 #### FutureBook
